@@ -50,7 +50,6 @@ void MockMidiInput::Tick(int delta)
     }
 }
 
-// Just oscillate between note on/off
 bool MockMidiInput::TryGetNextNote(MidiNote* note_out)
 {
     if (index_ < 0 || index_ >= NUM_NOTES)

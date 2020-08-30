@@ -11,7 +11,6 @@ void setup() {
 }
 
 void loop() {
-
   auto baud = 9600U;
   auto buffer_size = 256U;
   unsigned char level_mask = SmartPiano::DEBUG | SmartPiano::INFO | SmartPiano::WARNING | SmartPiano::ERROR; //| SmartPiano::NOISY;
