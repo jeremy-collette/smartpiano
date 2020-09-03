@@ -19,7 +19,7 @@ void loop() {
 
   SmartPiano::MockMidiInput midi_input { logger };
 
-  auto num_leds = 60U;
+  auto num_leds = 144U;
   SmartPiano::FastLedNoteDisplay note_display { num_leds, logger };
   note_display.Initialize();
 

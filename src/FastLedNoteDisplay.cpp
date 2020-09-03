@@ -22,7 +22,7 @@ FastLedNoteDisplay::~FastLedNoteDisplay()
 bool FastLedNoteDisplay::Initialize()
 {
     logger_.Log(INFO, "Initializing FastLED...");
-    FastLED.addLeds<WS2811, DATA_PIN, GRB>(leds_, num_leds_);
+    FastLED.addLeds<WS2812, DATA_PIN, GRB>(leds_, num_leds_);
     for (auto i = 0U; i < num_leds_; ++i)
     {
         leds_[i] = CRGB::Black;
@@ -43,7 +43,9 @@ void FastLedNoteDisplay::DisplayNote(MidiNote midi_note)
         char buf[256];
         sprintf(buf, "Turning LED %u on!", midi_note.key);
         logger_.Log(DEBUG, buf);
-        leds_[midi_note.key] = CRGB::Red;
+        auto color = midi_note.key >= 60 ? CRGB::Red : CRGB::Blue;
+        leds_[num_leds_ - 1 - (midi_note.key - 30) * 2] = color;
+        leds_[num_leds_ - 1 - (midi_note.key - 30) * 2 - 1] = color;
         FastLED.show();
     }
     else
@@ -51,7 +53,8 @@ void FastLedNoteDisplay::DisplayNote(MidiNote midi_note)
         char buf[256];
         sprintf(buf, "Turning LED %u off!", midi_note.key);
         logger_.Log(DEBUG, buf);
-        leds_[midi_note.key] = CRGB::Black;
+        leds_[num_leds_ - 1 - (midi_note.key - 30) * 2] = CRGB::Black;
+        leds_[num_leds_ - 1 - (midi_note.key - 30) * 2 - 1] = CRGB::Black;
         FastLED.show();
     }
 }
