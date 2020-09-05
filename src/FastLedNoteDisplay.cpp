@@ -1,11 +1,11 @@
-#include "FastLedNoteDisplay.h"
+#include "FastLedDisplay.h"
 
 #include <FastLED.h>
 
 namespace SmartPiano
 {
 
-FastLedNoteDisplay::FastLedNoteDisplay(
+FastLedDisplay::FastLedDisplay(
     unsigned char num_leds,
     LoggerInterface& logger)
         : num_leds_{num_leds}
@@ -14,12 +14,12 @@ FastLedNoteDisplay::FastLedNoteDisplay(
     leds_ = new CRGB[num_leds];
 }
 
-FastLedNoteDisplay::~FastLedNoteDisplay()
+FastLedDisplay::~FastLedDisplay()
 {
     delete[] leds_;
 }
 
-bool FastLedNoteDisplay::Initialize()
+bool FastLedDisplay::Initialize()
 {
     logger_.Log(INFO, "Initializing FastLED...");
     FastLED.addLeds<WS2812, DATA_PIN, GRB>(leds_, num_leds_);
@@ -31,7 +31,7 @@ bool FastLedNoteDisplay::Initialize()
     return true;
 }
 
-void FastLedNoteDisplay::DisplayNote(MidiNote midi_note)
+void FastLedDisplay::ExecuteLedCommand(LedCommand midi_note)
 {
     if (midi_note.key < 0 || midi_note.key >= num_leds_)
     {

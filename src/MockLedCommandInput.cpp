@@ -1,4 +1,4 @@
-#include "MockMidiInput.h"
+#include "MockLedCommandInput.h"
 
 #include <Arduino.h>
 
@@ -16,7 +16,7 @@ namespace SmartPiano
 */
 
 const int NUM_NOTES = 20;
-MidiNote midi_song[NUM_NOTES]
+LedCommand midi_song[NUM_NOTES]
 {
     /*tick on chan key vol*/
     { 0, 1, 0, 64, 52 },
@@ -36,7 +36,7 @@ MidiNote midi_song[NUM_NOTES]
     { ULONG_MAX, 0, 0, 0, 0 }
 };
 
-MockMidiInput::MockMidiInput(LoggerInterface& logger)
+MockLedCommandInput::MockLedCommandInput(LoggerInterface& logger)
     : tick_{0}
     , logger_{logger}
     , index_{0}
@@ -44,17 +44,17 @@ MockMidiInput::MockMidiInput(LoggerInterface& logger)
 
 }
 
-bool MockMidiInput::IsEof()
+bool MockLedCommandInput::IsEof()
 {
     return false;
 }
 
-void MockMidiInput::Tick(int delta)
+void MockLedCommandInput::Tick(int delta)
 {
     tick_ += delta;
 }
 
-bool MockMidiInput::TryGetNextNote(MidiNote* note_out)
+bool MockLedCommandInput::TryGetNextCommand(LedCommand* note_out)
 {
     if (index_ < 0 || index_ >= NUM_NOTES-1
         || midi_song[index_].tick == ULONG_MAX)

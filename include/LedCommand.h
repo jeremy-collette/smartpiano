@@ -1,10 +1,10 @@
-#ifndef SMARTPIANO_MIDINOTE_H_
-#define SMARTPIANO_MIDINOTE_H_
+#ifndef SMARTPIANO_LEDCOMMAND_H_
+#define SMARTPIANO_LEDCOMMAND_H_
 
 namespace SmartPiano
 {
 
-struct MidiNote
+struct LedCommand
 {
     unsigned long tick;
     bool on;
@@ -15,4 +15,4 @@ struct MidiNote
 
 }
 
-#endif  // SMARTPIANO_MIDINOTE_H_
+#endif  // SMARTPIANO_LEDCOMMAND_H_

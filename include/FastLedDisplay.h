@@ -1,7 +1,7 @@
-#ifndef SMARTPIANO_FASTLEDNOTEDISPLAY_H_
-#define SMARTPIANO_FASTLEDNOTEDISPLAY_H_
+#ifndef SMARTPIANO_FASTLEDDISPLAY_H_
+#define SMARTPIANO_FASTLEDDISPLAY_H_
 
-#include "NoteDisplayInterface.h"
+#include "LedDisplayInterface.h"
 
 #include <FastLED.h>
 
@@ -10,18 +10,18 @@
 namespace SmartPiano
 {
 
-class FastLedNoteDisplay : public NoteDisplayInterface
+class FastLedDisplay : public LedDisplayInterface
 {
  public:
     const static int DATA_PIN = 8;
 
-    FastLedNoteDisplay(
+    FastLedDisplay(
         unsigned char num_leds,
         LoggerInterface& logger);
-    virtual ~FastLedNoteDisplay();
+    virtual ~FastLedDisplay();
 
     virtual bool Initialize();
-    virtual void DisplayNote(MidiNote note);
+    virtual void ExecuteLedCommand(LedCommand note);
 
  private:
     CRGB* leds_;

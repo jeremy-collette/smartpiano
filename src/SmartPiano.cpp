@@ -7,12 +7,12 @@ namespace SmartPiano
 {
 
 SmartPiano::SmartPiano(
-    MidiInputInterface& midi_input
-    , NoteDisplayInterface& note_display
+    LedCommandInputInterface& led_command_input
+    , LedDisplayInterface& led_display
     , DelayerInterface& delayer
     , LoggerInterface& logger)
-        : midi_input_{midi_input}
-        , note_display_{note_display}
+        : led_command_input_{led_command_input}
+        , led_display_{led_display}
         , delayer_{delayer}
         , logger_{logger}
 {
@@ -21,21 +21,21 @@ SmartPiano::SmartPiano(
 void SmartPiano::Run()
 {
     logger_.Log(INFO, "Started running");
-    while (!midi_input_.IsEof())
+    while (!led_command_input_.IsEof())
     {
         logger_.Log(NOISY, "Tick");
-        MidiNote midi_note;
-        while (midi_input_.TryGetNextNote(&midi_note))
+        LedCommand led_command;
+        while (led_command_input_.TryGetNextCommand(&led_command))
         {
             char buf[256];
-            sprintf(buf, "Got note. Key = %u, On = %u", midi_note.key, midi_note.on);
+            sprintf(buf, "Got note. Key = %u, On = %u", led_command.key, led_command.on);
             logger_.Log(INFO, buf);
-            note_display_.DisplayNote(midi_note);
+            led_display_.ExecuteLedCommand(led_command);
         }
 
         auto delta = 100;
         delayer_.Delay(delta);
-        midi_input_.Tick(delta);
+        led_command_input_.Tick(delta);
     }
 }
 

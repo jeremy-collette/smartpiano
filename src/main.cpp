@@ -2,8 +2,8 @@
 
 #include "ArduinoDelayer.h"
 #include "ArduinoSerialLogger.h"
-#include "MockMidiInput.h"
-#include "FastLedNoteDisplay.h"
+#include "MockLedCommandInput.h"
+#include "FastLedDisplay.h"
 #include "SmartPiano.h"
 
 void setup() {
@@ -17,10 +17,10 @@ void loop() {
   SmartPiano::ArduinoSerialLogger logger { baud, buffer_size, level_mask };
   logger.Initialize();
 
-  SmartPiano::MockMidiInput midi_input { logger };
+  SmartPiano::MockLedCommandInput midi_input { logger };
 
   auto num_leds = 144U;
-  SmartPiano::FastLedNoteDisplay note_display { num_leds, logger };
+  SmartPiano::FastLedDisplay note_display { num_leds, logger };
   note_display.Initialize();
 
   SmartPiano::ArduinoDelayer delayer;
