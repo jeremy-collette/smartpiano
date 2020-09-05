@@ -38,7 +38,7 @@ void FastLedDisplay::ExecuteLedCommand(const LedCommand& led_command)
         return;
     }
 
-    char buf[256];
+    char buf[128];
     if (IsLedCommandOn(led_command))
     {
         sprintf(buf, "Setting LED %u to color (%u, %u, %u, %u).", led_command.index, led_command.red
@@ -51,10 +51,8 @@ void FastLedDisplay::ExecuteLedCommand(const LedCommand& led_command)
     logger_.Log(DEBUG, buf);
 
     auto color = CRGB{ led_command.red, led_command.green, led_command.blue };
-    leds_[num_leds_ - 1 - (led_command.index - 30) * 2] = color;
-    leds_[num_leds_ - 1 - (led_command.index - 30) * 2 - 1] = color;
+    leds_[led_command.index] = color;
     FastLED.show();
-
 }
 
 

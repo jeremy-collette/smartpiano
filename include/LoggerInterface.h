@@ -10,7 +10,7 @@ class LoggerInterface
 {
  public:
     virtual void Initialize() = 0;
-    virtual void Log(LogLevel level, char* message) = 0;
+    virtual void Log(LogLevel level, const char* format, ...) = 0;
 };
 
 }
