@@ -7,16 +7,17 @@
 namespace SmartPiano
 {
 
-/*
+struct MidiNote
+{
     unsigned long tick;
     bool on;
     unsigned char channel;
     unsigned char key;
     unsigned int volume;
-*/
+};
 
 const int NUM_NOTES = 20;
-LedCommand midi_song[NUM_NOTES]
+MidiNote midi_song[NUM_NOTES]
 {
     /*tick on chan key vol*/
     { 0, 1, 0, 64, 52 },
@@ -54,7 +55,7 @@ void MockLedCommandInput::Tick(int delta)
     tick_ += delta;
 }
 
-bool MockLedCommandInput::TryGetNextCommand(LedCommand* note_out)
+bool MockLedCommandInput::TryGetNextCommand(LedCommand* command_out)
 {
     if (index_ < 0 || index_ >= NUM_NOTES-1
         || midi_song[index_].tick == ULONG_MAX)
@@ -71,10 +72,31 @@ bool MockLedCommandInput::TryGetNextCommand(LedCommand* note_out)
     }
     ++index_;
 
-    note_out->on = next_note.on;
-    note_out->channel = next_note.channel;
-    note_out->key = next_note.key;
-    note_out->volume = next_note.volume;
+    command_out->index = next_note.key;
+
+    if (!next_note.on)
+    {
+        command_out->red = 0;
+        command_out->green = 0;
+        command_out->blue = 0;
+        command_out->white = 0;
+        return true;
+    }
+
+    if (next_note.key >= 60)
+    {
+        command_out->red = 255;
+        command_out->green = 0;
+        command_out->blue = 0;
+        command_out->white = 0;
+    }
+    else
+    {
+        command_out->red = 0;
+        command_out->green = 0;
+        command_out->blue = 255;
+        command_out->white = 0;
+    }
     return true;
 }
 

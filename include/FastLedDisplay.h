@@ -21,13 +21,15 @@ class FastLedDisplay : public LedDisplayInterface
     virtual ~FastLedDisplay();
 
     virtual bool Initialize();
-    virtual void ExecuteLedCommand(LedCommand note);
+    virtual void ExecuteLedCommand(const LedCommand& note);
 
  private:
     CRGB* leds_;
     unsigned char num_leds_;
     unsigned char data_pin_;
     LoggerInterface& logger_;
+
+    bool IsLedCommandOn(const LedCommand& note) const;
 };
 
 }

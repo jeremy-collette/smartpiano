@@ -28,7 +28,7 @@ void SmartPiano::Run()
         while (led_command_input_.TryGetNextCommand(&led_command))
         {
             char buf[256];
-            sprintf(buf, "Got note. Key = %u, On = %u", led_command.key, led_command.on);
+            sprintf(buf, "Got note. Key = %u, On = %u", led_command.index, led_command.white);
             logger_.Log(INFO, buf);
             led_display_.ExecuteLedCommand(led_command);
         }

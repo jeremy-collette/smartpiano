@@ -10,7 +10,7 @@ class LedDisplayInterface
 {
  public:
     virtual bool Initialize() = 0;
-    virtual void ExecuteLedCommand(LedCommand note) = 0;
+    virtual void ExecuteLedCommand(const LedCommand& note) = 0;
 };
 
 }
