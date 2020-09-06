@@ -14,8 +14,8 @@ void setup() {
 void loop() {
   auto baud = 115200U;
   auto buffer_size = 256U;
-  unsigned char level_mask = //SmartPiano::TEST | SmartPiano::WARNING | SmartPiano::ERROR;
-    SmartPiano::DEBUG | SmartPiano::INFO | SmartPiano::WARNING | SmartPiano::ERROR /*| SmartPiano::NOISY*/ | SmartPiano::TEST;
+  unsigned char level_mask = SmartPiano::TEST | SmartPiano::WARNING | SmartPiano::ERROR;
+    //SmartPiano::DEBUG | SmartPiano::INFO | SmartPiano::WARNING | SmartPiano::ERROR /*| SmartPiano::NOISY*/ | SmartPiano::TEST;
   SmartPiano::SerialLogger logger { baud, buffer_size, level_mask };
   logger.Initialize();
 

@@ -51,7 +51,9 @@ void FastLedDisplay::ExecuteLedCommand(const LedCommand& led_command)
     logger_.Log(DEBUG, buf);
 
     auto color = CRGB{ led_command.red, led_command.green, led_command.blue };
-    leds_[led_command.index] = color;
+    // TODO(@jeremy): fix
+    leds_[(led_command.index - 30) * 2] = color;
+    leds_[(led_command.index - 30) * 2 + 1] = color;
     FastLED.show();
 }
 
