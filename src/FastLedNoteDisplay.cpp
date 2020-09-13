@@ -59,6 +59,8 @@ void FastLedDisplay::ExecuteLedCommand(const LedCommand& led_command)
         return;
     }
 
+// TODO(@jeremy): restore
+/*
     char buf[128];
     if (IsLedCommandOn(led_command))
     {
@@ -70,6 +72,7 @@ void FastLedDisplay::ExecuteLedCommand(const LedCommand& led_command)
         sprintf(buf, "Turning off LED %u.", led_command.index);
     }
     logger_.Log(DEBUG, buf);
+*/
 
     auto color = CRGB{ led_command.red, led_command.green, led_command.blue };
     // TODO(@jeremy): fix

@@ -1,13 +1,9 @@
 #include "SerialBinaryLedCommandInput.h"
 
 #include <Arduino.h>
-#include <ArduinoJson.h>
 
 namespace SmartPiano
 {
-
-// TODO(@jeremy): move
-StaticJsonDocument<128> doc;
 
 SerialBinaryLedCommandInput::SerialBinaryLedCommandInput(LoggerInterface& logger)
     : logger_{logger}

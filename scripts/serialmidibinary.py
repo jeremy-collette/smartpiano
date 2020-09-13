@@ -2,7 +2,7 @@ import serial
 from mido import MidiFile
 import time
 
-time_scale = 0.5
+time_scale = 1
 with serial.Serial("/dev/ttyACM0", 115200) as ser:
     time_index = 0
     for msg in MidiFile('mgs-jez.mid'):

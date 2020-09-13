@@ -22,13 +22,13 @@ void SmartPiano::Run()
 {
     auto delta = 0;
     logger_.Log(INFO, "Started running");
+    char buf[128];
     while (!led_command_input_.IsEof())
     {
         logger_.Log(NOISY, "Tick");
         LedCommand led_command;
         while (led_command_input_.TryGetNextCommand(&led_command))
         {
-            char buf[128];
             sprintf(buf, "Got note. Key = %u, On = %u", led_command.index, led_command.red | led_command.green | led_command.blue | led_command.white);
             logger_.Log(INFO, buf);
             led_display_.ExecuteLedCommand(led_command);
