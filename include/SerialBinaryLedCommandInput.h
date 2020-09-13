@@ -1,5 +1,5 @@
-#ifndef SMARTPIANO_SERIALLEDCOMMANDINPUT_H_
-#define SMARTPIANO_SERIALLEDCOMMANDINPUT_H_
+#ifndef SMARTPIANO_SERIALBINARYLEDCOMMANDINPUT_H_
+#define SMARTPIANO_SERIALBINARYLEDCOMMANDINPUT_H_
 
 #include "LedCommandInputInterface.h"
 
@@ -8,10 +8,10 @@
 namespace SmartPiano
 {
 
-class SerialLedCommandInput : public LedCommandInputInterface
+class SerialBinaryLedCommandInput : public LedCommandInputInterface
 {
  public:
-   SerialLedCommandInput(LoggerInterface& logger);
+   SerialBinaryLedCommandInput(LoggerInterface& logger);
 
    virtual bool Initialize();
 
@@ -25,4 +25,4 @@ class SerialLedCommandInput : public LedCommandInputInterface
 
 }
 
-#endif  // SMARTPIANO_SERIALLEDCOMMANDINPUT_H_
+#endif  // SMARTPIANO_SERIALBINARYLEDCOMMANDINPUT_H_

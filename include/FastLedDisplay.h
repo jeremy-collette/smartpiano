@@ -22,6 +22,7 @@ class FastLedDisplay : public LedDisplayInterface
 
     virtual bool Initialize();
     virtual void ExecuteLedCommand(const LedCommand& note);
+    virtual void Tick(int delta);
 
  private:
     CRGB* leds_;

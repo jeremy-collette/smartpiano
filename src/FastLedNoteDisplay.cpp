@@ -23,11 +23,32 @@ bool FastLedDisplay::Initialize()
 {
     logger_.Log(INFO, "Initializing FastLED...");
     FastLED.addLeds<WS2812, DATA_PIN, GRB>(leds_, num_leds_);
+
+    auto startingIndex = 0;
+    uint8_t brightness = 255;
+    CRGBPalette16 currentPalette = RainbowColors_p;
+    TBlendType    currentBlending = LINEARBLEND;
+
+    // TODO(@jeremy): can we do this on steady-state (before note is received?)
+    for (auto j = 0U; j < 500; ++j)
+    {
+        auto colorIndex = startingIndex++;
+        for (auto i = 0U; i < num_leds_; ++i)
+        {
+            leds_[i] = ColorFromPalette(currentPalette, colorIndex, brightness, currentBlending);
+            colorIndex += 1;
+        }
+        FastLED.show();
+        FastLED.delay(1);
+    }
+
     for (auto i = 0U; i < num_leds_; ++i)
     {
         leds_[i] = CRGB::Black;
     }
     FastLED.show();
+    FastLED.delay(50);
+
     return true;
 }
 
@@ -54,9 +75,12 @@ void FastLedDisplay::ExecuteLedCommand(const LedCommand& led_command)
     // TODO(@jeremy): fix
     leds_[(led_command.index - 30) * 2] = color;
     leds_[(led_command.index - 30) * 2 + 1] = color;
-    FastLED.show();
 }
 
+void FastLedDisplay::Tick(int delta)
+{
+    FastLED.show();
+}
 
 bool FastLedDisplay::IsLedCommandOn(const LedCommand& note) const
 {

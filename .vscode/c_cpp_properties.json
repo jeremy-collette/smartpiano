@@ -45,8 +45,9 @@
                 ]
             },
             "defines": [
-                "PLATFORMIO=40304",
+                "PLATFORMIO=50000",
                 "ARDUINO_AVR_UNO",
+                "SERIAL_RX_BUFFER_SIZE=256",
                 "F_CPU=16000000L",
                 "ARDUINO_ARCH_AVR",
                 "ARDUINO=10808",

@@ -20,6 +20,7 @@ SmartPiano::SmartPiano(
 
 void SmartPiano::Run()
 {
+    auto delta = 0;
     logger_.Log(INFO, "Started running");
     while (!led_command_input_.IsEof())
     {
@@ -32,10 +33,10 @@ void SmartPiano::Run()
             logger_.Log(INFO, buf);
             led_display_.ExecuteLedCommand(led_command);
         }
-
-        auto delta = 10;
-        delayer_.Delay(delta);
+        led_display_.Tick(delta);
         led_command_input_.Tick(delta);
+        delta = 10;
+        delayer_.Delay(delta);
     }
 }
 

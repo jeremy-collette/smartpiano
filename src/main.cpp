@@ -3,7 +3,7 @@
 #include "Delayer.h"
 #include "FastLedDisplay.h"
 //#include "MockLedCommandInput.h"
-#include "SerialLedCommandInput.h"
+#include "SerialBinaryLedCommandInput.h"
 #include "SerialLogger.h"
 #include "SmartPiano.h"
 
@@ -20,7 +20,7 @@ void loop() {
   logger.Initialize();
 
    //SmartPiano::MockLedCommandInput led_command_input { logger };
-  SmartPiano::SerialLedCommandInput led_command_input { logger };
+  SmartPiano::SerialBinaryLedCommandInput led_command_input { logger };
 
   auto num_leds = 144U;
   SmartPiano::FastLedDisplay led_display { num_leds, logger };
