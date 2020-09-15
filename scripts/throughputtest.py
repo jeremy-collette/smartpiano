@@ -16,10 +16,9 @@ def send_commands(indexes, state):
     packet = bytearray()
     for i in range(0, len(indexes)):
         index = indexes[i]
-        midi_note = index + 30
-        print("Turning " + state + " note " + str(midi_note))
+        print("Turning " + state + " LED " + str(index))
         packet.append(0x32)
-        packet.append(midi_note)
+        packet.append(index)
         packet.append(state == "on")
     ser.write(packet)
 
@@ -32,12 +31,8 @@ while True:
                 state = "off"
 
             i = 0
-            while i <= 73:
-                #send_command(i, state)
-                #i += 1
-                #send_command(i, state)
-                #i += 1
-                indexes = range(i, i+10)
+            while i < 144:
+                indexes = range(i, min(i+10,144))
                 send_commands(indexes, state)
                 i += len(indexes)
                 time.sleep(1)

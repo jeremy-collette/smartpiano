@@ -76,12 +76,24 @@ void FastLedDisplay::ExecuteLedCommand(const LedCommand& led_command)
 
     auto color = CRGB{ led_command.red, led_command.green, led_command.blue };
     // TODO(@jeremy): fix
-    leds_[(led_command.index - 30) * 2] = color;
-    leds_[(led_command.index - 30) * 2 + 1] = color;
+    auto index = (led_command.index - 30) * 2;
+    if (index < 0 || index + 1 >= num_leds_ - 1)
+    {
+        return;
+    }
+    /*
+    char buf[128];
+    sprintf(buf, "Setting LED %u and %u to color (%u, %u, %u, %u).", index, index+1,
+        led_command.red, led_command.green, led_command.blue, led_command.white);
+    Serial.println(buf);
+    */
+    leds_[index] = color;
+    leds_[index + 1] = color;
 }
 
 void FastLedDisplay::Tick(int delta)
 {
+    Serial.println("Show!");
     FastLED.show();
 }
 

@@ -9,6 +9,7 @@
 
 // TODO(@jez): remove
 #include "LedCommand.h"
+#include <FastLED.h>
 
 void setup() {
 
@@ -41,18 +42,11 @@ void setup() {
 
 void loop()
 {
-    auto baud = 115200U;
-    auto buffer_size = 256U;
-    unsigned char level_mask = 0;
-    SmartPiano::SerialLogger logger { baud, buffer_size, level_mask };
-    logger.Initialize();
-
-    auto num_leds = 144U;
-    SmartPiano::FastLedDisplay led_display { num_leds, logger };
-    led_display.Initialize();
+    auto leds = new CRGB[144];
+    FastLED.addLeds<WS2812, 8, GRB>(leds, 144);
 
     Serial.begin(115200U);
-    char buffer[256];
+    char buffer[128];
     Serial.println("Ready!");
 
     auto commands = 0;
@@ -65,23 +59,33 @@ void loop()
         ++commands;
 
         auto header = Serial.read();
+
+        if (header != 0x32)
+        {
+            snprintf(buffer, 128, "Invalid header %d!", header);
+            Serial.println(buffer);
+            continue;
+        }
         auto key = Serial.read();
         auto on = Serial.read();
 
-        snprintf(buffer, 256, "Header = %d, Key = %d, On = %d", header, key, on);
+        snprintf(buffer, 128, "Header = %d, Key = %d, On = %d", header, key, on);
         Serial.println(buffer);
 
-        SmartPiano::LedCommand command;
-        command.index = key;
-        command.red = on ? 255 : 0;
-        command.green = 0;
-        command.blue = 0;
-        command.white = 0;
+        if (key < 0 || key >= 144)
+        {
+            snprintf(buffer, 128, "Invalid key %d!", key);
+            Serial.println(buffer);
+            continue;
+        }
 
-        led_display.ExecuteLedCommand(command);
+        auto color = on ? CRGB::Red : CRGB::Black;
+        leds[key] = color;
+
         if (commands % 10 == 0)
         {
-            led_display.Tick(0);
+            commands = 0;
+            FastLED.show();
         }
         //delay(10);
     }
