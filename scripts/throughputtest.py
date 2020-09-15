@@ -32,7 +32,7 @@ while True:
 
             i = 0
             while i < 144:
-                indexes = range(i, min(i+10,144))
+                indexes = range(i, min(i+25,144))
                 send_commands(indexes, state)
                 i += len(indexes)
                 time.sleep(1)
