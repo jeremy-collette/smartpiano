@@ -35,7 +35,7 @@ void SmartPiano::Run()
         }
         led_display_.Tick(delta);
         led_command_input_.Tick(delta);
-        delta = 10;
+        delta = 100;
         delayer_.Delay(delta);
     }
 }

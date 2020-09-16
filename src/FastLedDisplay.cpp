@@ -10,6 +10,7 @@ FastLedDisplay::FastLedDisplay(
     LoggerInterface& logger)
         : num_leds_{num_leds}
         , logger_{logger}
+        , tick_{0}
 {
     leds_ = new CRGB[num_leds];
 }
@@ -27,7 +28,7 @@ bool FastLedDisplay::Initialize()
     auto startingIndex = 0;
     uint8_t brightness = 255;
     CRGBPalette16 currentPalette = RainbowColors_p;
-    TBlendType    currentBlending = LINEARBLEND;
+    TBlendType currentBlending = LINEARBLEND;
 
     // TODO(@jeremy): can we do this on steady-state (before note is received?)
     for (auto j = 0U; j < 500; ++j)
@@ -87,8 +88,12 @@ void FastLedDisplay::ExecuteLedCommand(const LedCommand& led_command)
 
 void FastLedDisplay::Tick(int delta)
 {
-    //Serial.println("Show!");
-    FastLED.show();
+    tick_ += delta;
+    if (tick_ % 100 == 0)
+    {
+        tick_ = 0;
+        FastLED.show();
+    }
 }
 
 bool FastLedDisplay::IsLedCommandOn(const LedCommand& note) const

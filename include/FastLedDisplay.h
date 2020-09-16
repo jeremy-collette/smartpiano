@@ -29,6 +29,8 @@ class FastLedDisplay : public LedDisplayInterface
     unsigned char num_leds_;
     unsigned char data_pin_;
     LoggerInterface& logger_;
+    // TODO: change data type
+    int tick_;
 
     bool IsLedCommandOn(const LedCommand& note) const;
 };

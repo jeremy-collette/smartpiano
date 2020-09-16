@@ -15,4 +15,5 @@ with serial.Serial("/dev/ttyACM0", 115200) as ser:
             packet.append(int(msg.type == "note_on"))
             ser.write(packet)
             print("Wrote data: note=" + str(msg.note) + ", on=" + str(msg.type == "note_on"))
-
+    time.sleep(5)
+    print("Done!")
