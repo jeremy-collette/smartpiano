@@ -54,46 +54,40 @@ bool FastLedDisplay::Initialize()
 
 void FastLedDisplay::ExecuteLedCommand(const LedCommand& led_command)
 {
-    if (led_command.index < 0 || led_command.index >= num_leds_)
+    auto index1 = (led_command.index - 30) * 2;
+    auto index2 = index1 + 1;
+    if (index1 < 0 || index2 >= num_leds_ - 1)
     {
         return;
     }
 
-// TODO(@jeremy): restore
-/*
+    auto color = CRGB{ led_command.red, led_command.green, led_command.blue };
     char buf[128];
     if (IsLedCommandOn(led_command))
     {
-        sprintf(buf, "Setting LED %u to color (%u, %u, %u, %u).", led_command.index, led_command.red
-            , led_command.green, led_command.blue, led_command.white);
+        sprintf(buf, "Setting LEDs %u and %u to color (%u, %u, %u, %u)."
+            , index1
+            , index2
+            , led_command.red
+            , led_command.green
+            , led_command.blue
+            , led_command.white);
     }
     else
     {
-        sprintf(buf, "Turning off LED %u.", led_command.index);
+        sprintf(buf, "Turning off LED %u and %u."
+            , index1
+            , index2);
     }
     logger_.Log(DEBUG, buf);
-*/
 
-    auto color = CRGB{ led_command.red, led_command.green, led_command.blue };
-    // TODO(@jeremy): fix
-    auto index = (led_command.index - 30) * 2;
-    if (index < 0 || index + 1 >= num_leds_ - 1)
-    {
-        return;
-    }
-    /*
-    char buf[128];
-    sprintf(buf, "Setting LED %u and %u to color (%u, %u, %u, %u).", index, index+1,
-        led_command.red, led_command.green, led_command.blue, led_command.white);
-    Serial.println(buf);
-    */
-    leds_[index] = color;
-    leds_[index + 1] = color;
+    leds_[index1] = color;
+    leds_[index2] = color;
 }
 
 void FastLedDisplay::Tick(int delta)
 {
-    Serial.println("Show!");
+    //Serial.println("Show!");
     FastLED.show();
 }
 

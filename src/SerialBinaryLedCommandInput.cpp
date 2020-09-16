@@ -27,7 +27,7 @@ bool SerialBinaryLedCommandInput::TryGetNextCommand(LedCommand* command_out)
 
     char printBuf[50];
     snprintf(printBuf, 50, "Available bytes: %d", available_bytes);
-    //logger_.Log(SmartPiano::TEST, printBuf);
+    logger_.Log(SmartPiano::NOISY, printBuf);
 
     char check_byte = Serial.read();
     if (check_byte != 0x32)
@@ -40,8 +40,7 @@ bool SerialBinaryLedCommandInput::TryGetNextCommand(LedCommand* command_out)
     int key = Serial.read();
     int on = Serial.read();
 
-    //snprintf(printBuf, 50, "Got command: %d %d", key, on);
-    snprintf(printBuf, 50, "Read data: note=%d, on=%s", key, on ? "True" : "False");
+    snprintf(printBuf, 50, "Got command: note=%d, on=%s", key, on ? "True" : "False");
     logger_.Log(SmartPiano::TEST, printBuf);
 
     command_out->index = key;
