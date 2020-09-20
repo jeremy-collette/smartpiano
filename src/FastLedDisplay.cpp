@@ -92,7 +92,11 @@ void FastLedDisplay::Tick(int delta)
     if (tick_ % 100 == 0)
     {
         tick_ = 0;
+        // TODO(@jez): move
+        Serial.println("STOP send");
         FastLED.show();
+        // TODO(@jez): move
+        Serial.println("OK send");
     }
 }
 
