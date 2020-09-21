@@ -4,6 +4,7 @@
 #include "LedCommandInputInterface.h"
 
 #include "LoggerInterface.h"
+#include "SerialInterface.h"
 
 namespace SmartPiano
 {
@@ -11,7 +12,9 @@ namespace SmartPiano
 class SerialBinaryLedCommandInput : public LedCommandInputInterface
 {
  public:
-   SerialBinaryLedCommandInput(LoggerInterface& logger);
+   SerialBinaryLedCommandInput(
+     SerialInterface& serial
+     , LoggerInterface& logger);
 
    virtual bool Initialize();
 
@@ -20,6 +23,7 @@ class SerialBinaryLedCommandInput : public LedCommandInputInterface
    virtual bool IsEof();
 
  private:
+   SerialInterface& serial_;
    LoggerInterface& logger_;
 };
 

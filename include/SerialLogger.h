@@ -1,9 +1,12 @@
 #ifndef SMARTPIANO_SERIALLOGGER_H_
 #define SMARTPIANO_SERIALLOGGER_H_
 
-#include <Arduino.h>
-
 #include "LoggerInterface.h"
+
+#include <Arduino.h>
+#include <stdarg.h>
+
+#include "SerialInterface.h"
 
 namespace SmartPiano
 {
@@ -12,7 +15,7 @@ class SerialLogger : public LoggerInterface
 {
  public:
     SerialLogger(
-        unsigned long baud
+        SerialInterface& serial
         , size_t buffer_size
         , unsigned char level_mask);
     ~SerialLogger();
@@ -21,10 +24,12 @@ class SerialLogger : public LoggerInterface
     virtual void Log(LogLevel level, const char* format, ...);
 
  private:
-    unsigned long baud_;
+    SerialInterface& serial_;
     size_t buffer_size_;
     char* buffer_;
     unsigned char level_mask_;
+
+    virtual void Log(LogLevel level, const char* format, va_list arglist);
 };
 
 }

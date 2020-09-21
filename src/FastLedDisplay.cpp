@@ -7,10 +7,12 @@ namespace SmartPiano
 
 FastLedDisplay::FastLedDisplay(
     unsigned char num_leds,
-    LoggerInterface& logger)
+    LoggerInterface& logger,
+    SerialInterface& serial)
         : num_leds_{num_leds}
         , logger_{logger}
         , tick_{0}
+        , serial_{serial}
 {
     leds_ = new CRGB[num_leds];
 }
@@ -50,6 +52,7 @@ bool FastLedDisplay::Initialize()
     FastLED.show();
     FastLED.delay(50);
 
+    serial_.PrintLine("OK send");
     return true;
 }
 
@@ -63,10 +66,9 @@ void FastLedDisplay::ExecuteLedCommand(const LedCommand& led_command)
     }
 
     auto color = CRGB{ led_command.red, led_command.green, led_command.blue };
-    char buf[128];
     if (IsLedCommandOn(led_command))
     {
-        sprintf(buf, "Setting LEDs %u and %u to color (%u, %u, %u, %u)."
+        logger_.Log(DEBUG, "Setting LEDs %u and %u to color (%u, %u, %u, %u)."
             , index1
             , index2
             , led_command.red
@@ -76,11 +78,10 @@ void FastLedDisplay::ExecuteLedCommand(const LedCommand& led_command)
     }
     else
     {
-        sprintf(buf, "Turning off LED %u and %u."
+        logger_.Log(DEBUG, "Turning off LED %u and %u."
             , index1
             , index2);
     }
-    logger_.Log(DEBUG, buf);
 
     leds_[index1] = color;
     leds_[index2] = color;
@@ -93,10 +94,10 @@ void FastLedDisplay::Tick(int delta)
     {
         tick_ = 0;
         // TODO(@jez): move
-        Serial.println("STOP send");
+        serial_.PrintLine("STOP send");
         FastLED.show();
         // TODO(@jez): move
-        Serial.println("OK send");
+        serial_.PrintLine("OK send");
     }
 }
 

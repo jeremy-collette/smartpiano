@@ -1,12 +1,13 @@
 #include "SerialBinaryLedCommandInput.h"
 
-#include <Arduino.h>
-
 namespace SmartPiano
 {
 
-SerialBinaryLedCommandInput::SerialBinaryLedCommandInput(LoggerInterface& logger)
-    : logger_{logger}
+SerialBinaryLedCommandInput::SerialBinaryLedCommandInput(
+    SerialInterface& serial
+    , LoggerInterface& logger)
+        : serial_{serial}
+        , logger_{logger}
 {
 
 }
@@ -19,29 +20,24 @@ bool SerialBinaryLedCommandInput::Initialize()
 bool SerialBinaryLedCommandInput::TryGetNextCommand(LedCommand* command_out)
 {
     // TODO(jeremy): move this logic to tick
-    auto available_bytes = Serial.available();
+    auto available_bytes = serial_.Available();
     if (available_bytes < 3)
     {
         return false;
     }
 
-    char printBuf[50];
-    snprintf(printBuf, 50, "Available bytes: %d", available_bytes);
-    logger_.Log(SmartPiano::NOISY, printBuf);
+    logger_.Log(SmartPiano::NOISY, "Available bytes: %d", available_bytes);
 
-    char check_byte = Serial.read();
+    char check_byte = serial_.ReadByte();
     if (check_byte != 0x32)
     {
-        snprintf(printBuf, 50, "Got invalid check byte: %d", check_byte);
-        logger_.Log(SmartPiano::WARNING, printBuf);
+        logger_.Log(SmartPiano::WARNING, "Got invalid check byte: %d", check_byte);
         return false;
     }
 
-    int key = Serial.read();
-    int on = Serial.read();
-
-    snprintf(printBuf, 50, "Got command: note=%d, on=%s", key, on ? "True" : "False");
-    logger_.Log(SmartPiano::TEST, printBuf);
+    int key = serial_.ReadByte();
+    int on = serial_.ReadByte();
+    logger_.Log(SmartPiano::TEST, "Got command: note=%d, on=%s", key, on ? "True" : "False");
 
     command_out->index = key;
     if (!on)
