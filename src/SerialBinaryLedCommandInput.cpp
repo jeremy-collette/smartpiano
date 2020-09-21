@@ -19,13 +19,12 @@ bool SerialBinaryLedCommandInput::Initialize()
 
 bool SerialBinaryLedCommandInput::TryGetNextCommand(LedCommand* command_out)
 {
-    // TODO(jeremy): move this logic to tick
+    // TODO(jeremy): move this logic to tick?
     auto available_bytes = serial_.Available();
     if (available_bytes < 3)
     {
         return false;
     }
-
     logger_.Log(SmartPiano::NOISY, "Available bytes: %d", available_bytes);
 
     char check_byte = serial_.ReadByte();

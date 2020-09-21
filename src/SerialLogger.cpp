@@ -40,10 +40,10 @@ void SerialLogger::Log(LogLevel level, const char* format, va_list arglist)
     if (level & level_mask_)
     {
         // Add LogLevel to buffer
-        snprintf(buffer_, buffer_size_, "[%u]: ", level);
+        auto written = snprintf(buffer_, buffer_size_, "[%u]: ", level);
 
         // Add text after LogLevel
-        vsnprintf(buffer_+5, buffer_size_-5, format, arglist);
+        vsnprintf(buffer_ + written, buffer_size_ - written, format, arglist);
         serial_.PrintLine(buffer_);
     }
 }

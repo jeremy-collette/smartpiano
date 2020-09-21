@@ -32,4 +32,9 @@ int Serial::ReadByte()
     return ::Serial.read();
 }
 
+int Serial::PeekByte()
+{
+    return ::Serial.peek();
+}
+
 }

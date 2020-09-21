@@ -28,7 +28,10 @@ void SmartPiano::Run()
         LedCommand led_command;
         while (led_command_input_.TryGetNextCommand(&led_command))
         {
-            logger_.Log(INFO, "Got note. Key = %u, On = %u", led_command.index, led_command.red | led_command.green | led_command.blue | led_command.white);
+            logger_.Log(DEBUG, "Got LED command. Key = %u, On = %u"
+                , led_command.index
+                , led_command.red | led_command.green | led_command.blue | led_command.white);
+
             led_display_.ExecuteLedCommand(led_command);
         }
         led_display_.Tick(delta);

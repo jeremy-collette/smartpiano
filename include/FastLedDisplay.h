@@ -34,6 +34,7 @@ class FastLedDisplay : public LedDisplayInterface
     SerialInterface& serial_;
     // TODO: change data type
     int tick_;
+    bool waiting_to_show_;
 
     bool IsLedCommandOn(const LedCommand& note) const;
 };

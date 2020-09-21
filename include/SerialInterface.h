@@ -11,6 +11,7 @@ class SerialInterface
     virtual bool Initialize() = 0;
     virtual void PrintLine(const char* data) = 0;
     virtual int ReadByte() = 0;
+    virtual int PeekByte() = 0;
 };
 
 }

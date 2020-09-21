@@ -11,8 +11,9 @@ FastLedDisplay::FastLedDisplay(
     SerialInterface& serial)
         : num_leds_{num_leds}
         , logger_{logger}
-        , tick_{0}
         , serial_{serial}
+        , tick_{0}
+        , waiting_to_show_{false}
 {
     leds_ = new CRGB[num_leds];
 }
@@ -52,7 +53,7 @@ bool FastLedDisplay::Initialize()
     FastLED.show();
     FastLED.delay(50);
 
-    serial_.PrintLine("OK send");
+    serial_.PrintLine("START");
     return true;
 }
 
@@ -92,12 +93,20 @@ void FastLedDisplay::Tick(int delta)
     tick_ += delta;
     if (tick_ % 100 == 0)
     {
-        tick_ = 0;
-        // TODO(@jez): move
-        serial_.PrintLine("STOP send");
+        serial_.PrintLine("STOP");
+        waiting_to_show_ = true;
+    }
+
+    // If we've told the PC to stop & we've read all the data then we
+    // can show :-)
+    if (waiting_to_show_ && serial_.Available() == 0)
+    {
+        logger_.Log(DEBUG, "Calling FastLED.show()!");
         FastLED.show();
+        waiting_to_show_ = false;
+
         // TODO(@jez): move
-        serial_.PrintLine("OK send");
+        serial_.PrintLine("START");
     }
 }
 

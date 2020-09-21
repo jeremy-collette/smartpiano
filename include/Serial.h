@@ -15,6 +15,7 @@ class Serial : public SerialInterface
     virtual bool Initialize();
     virtual void PrintLine(const char* data);
     virtual int ReadByte();
+    virtual int PeekByte();
 
  private:
     unsigned long baud_;
