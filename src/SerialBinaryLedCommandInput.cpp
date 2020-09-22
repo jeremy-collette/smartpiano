@@ -21,7 +21,7 @@ bool SerialBinaryLedCommandInput::TryGetNextCommand(LedCommand* command_out)
 {
     // TODO(jeremy): move this logic to tick?
     auto available_bytes = serial_.Available();
-    if (available_bytes < 3)
+    if (available_bytes < 4)
     {
         return false;
     }
@@ -36,7 +36,8 @@ bool SerialBinaryLedCommandInput::TryGetNextCommand(LedCommand* command_out)
 
     int key = serial_.ReadByte();
     int on = serial_.ReadByte();
-    logger_.Log(SmartPiano::TEST, "Got command: note=%d, on=%s", key, on ? "True" : "False");
+    int track = serial_.ReadByte();
+    logger_.Log(SmartPiano::TEST, "Got command: note=%d, on=%s, track=%d", key, on ? "True" : "False", track);
 
     command_out->index = key;
     if (!on)
@@ -48,7 +49,7 @@ bool SerialBinaryLedCommandInput::TryGetNextCommand(LedCommand* command_out)
         return true;
     }
 
-    if (key >= 60)
+    if (track % 2 == 0)
     {
         command_out->red = 255;
         command_out->green = 0;

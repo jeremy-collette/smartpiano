@@ -16,8 +16,8 @@ unsigned char level_mask =
   | SmartPiano::WARNING
   | SmartPiano::ERROR
   | SmartPiano::INFO
-  | SmartPiano::DEBUG
-  | SmartPiano::NOISY;
+  | SmartPiano::DEBUG;
+  //| SmartPiano::NOISY;
 
   //SmartPiano::DEBUG | SmartPiano::INFO | SmartPiano::WARNING | SmartPiano::ERROR /*| SmartPiano::NOISY*/ | SmartPiano::TEST;
 SmartPiano::SerialLogger logger { serial, buffer_size, level_mask };

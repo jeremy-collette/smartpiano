@@ -91,10 +91,21 @@ void FastLedDisplay::ExecuteLedCommand(const LedCommand& led_command)
 void FastLedDisplay::Tick(int delta)
 {
     tick_ += delta;
-    if (tick_ % 100 == 0)
+    if (tick_ % 50 == 0 && waiting_to_show_)
+    {
+        while (serial_.Available() && serial_.Available() % 4 != 0)
+        {
+            auto extra_byte = serial_.ReadByte();
+            logger_.Log(WARNING, "Cleared out extra byte %d", extra_byte);
+        }
+    }
+
+    if (tick_ % 100 == 0 || waiting_to_show_)
     {
         serial_.PrintLine("STOP");
         waiting_to_show_ = true;
+        logger_.Log(DEBUG, "Waiting to call FastLED.Show(). %d bytes remaining in buffer.", serial_.Available());
+        tick_ = 0;
     }
 
     // If we've told the PC to stop & we've read all the data then we
