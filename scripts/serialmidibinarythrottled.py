@@ -1,7 +1,9 @@
 import serial
 from mido import MidiFile
 import time, sys
+from datetime import datetime 
 
+file_name = "mgs-jez.mid"
 ready = 0
 send = 0
 time_scale = 1
@@ -16,10 +18,12 @@ def send_midi_message(ser, msg, track):
     global send
     while send == 0 or ser.in_waiting > 0:
         line = ser.readline().strip()
-        print("Received \"" + line + "\"")
+        now = datetime.now()
+        # dd/mm/YY H:M:S
+        dt_string = now.strftime("%d/%m/%Y %H:%M:%S")        
+        print("[" + dt_string + "] Received \"" + line + "\"")
 
         if (line == "STOP"):
-            print("Got stop!")
             send = 0
         elif (line == "START"):
             send = 1
@@ -29,8 +33,7 @@ def send_midi_message(ser, msg, track):
         send_packet(ser, [0x32, int(msg.note), is_on, int(track)])
         print("Wrote data: note=" + str(msg.note) + ", on=" + str(is_on) + ", track=" + str(track))
 
-#midi_file = MidiFile('mgs-jez.mid'):
-midi_file = MidiFile('Sweden_Minecraft.mid')
+midi_file = MidiFile(file_name)
 msg_tracks = []
 for i,track in enumerate(midi_file.tracks):
     total_time = 0
@@ -65,6 +68,5 @@ with serial.Serial("/dev/ttyACM0", 115200) as ser:
         time.sleep(msg.time / time_scale)
         send_midi_message(ser, msg, track)
 
-time.sleep(5)
 print("Done!")
 

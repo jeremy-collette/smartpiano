@@ -17,7 +17,7 @@ class SerialLogger : public LoggerInterface
     SerialLogger(
         SerialInterface& serial
         , size_t buffer_size
-        , unsigned char level_mask);
+        , LogLevel highest_level);
     ~SerialLogger();
 
     virtual void Initialize();
@@ -27,7 +27,7 @@ class SerialLogger : public LoggerInterface
     SerialInterface& serial_;
     size_t buffer_size_;
     char* buffer_;
-    unsigned char level_mask_;
+    LogLevel highest_level_;
 
     virtual void Log(LogLevel level, const char* format, va_list arglist);
 };

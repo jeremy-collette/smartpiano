@@ -14,9 +14,9 @@ enum LogLevel : unsigned char
 
     DEBUG = 8,
 
-    NOISY = 16,
+    TEST = 16,
 
-    TEST = 32
+    NOISY = 32
 };
 
 }
