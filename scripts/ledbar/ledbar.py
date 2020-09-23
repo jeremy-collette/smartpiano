@@ -7,10 +7,10 @@ class LedBar:
         self.printer = printer
 
     def init(self):
-        self._wait_for_message("Ready!")
+        #self._wait_for_message("Ready!")
         time.sleep(1)
 
-    def set_led(self, index, color):      
+    def set_led(self, index, color):
         data = [0x32, index]
         for pixel in color:
             data.append(pixel)
