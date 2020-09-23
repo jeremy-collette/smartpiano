@@ -1,16 +1,17 @@
-from datetime import datetime
+
 
 class SerialStream:
-    def __init__(self, serial):
+    def __init__(self, serial, printer):
         self.serial = serial
+        self.printer = printer
 
     def send_packet(self, data):
-        print(str(datetime.now().time()) + " Sending packet...")
+        self.printer.printmsg("Sending packet...")
         packet = bytearray()
         for d in data:
             packet.append(d)
         self.serial.write(packet)
-        print(str(datetime.now().time()) + " Sent!")
+        self.printer.printmsg("Sent!")
 
     def read_line(self):
         line = self.serial.readline().strip()

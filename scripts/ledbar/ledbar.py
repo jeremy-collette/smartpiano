@@ -1,7 +1,14 @@
-class LedBar:
-    def __init__(self, serialStream):
+import time
+
+class LedBar:  
+    def __init__(self, serialStream, printer):
         self.serialStream = serialStream
         self.send = 0
+        self.printer = printer
+
+    def init(self):
+        self._wait_for_message("Ready!")
+        time.sleep(1)
 
     def set_led(self, index, color):      
         data = [0x32, index]
@@ -9,18 +16,19 @@ class LedBar:
             data.append(pixel)
 
         self.serialStream.send_packet(data)
-        print("Wrote data: " + str(data))
+        self.printer.printmsg("Wrote data: " + str(data))
 
     def update(self):
-        print ("Sending update request...")
+        self.printer.printmsg("Sending update request...")
         self.serialStream.send_packet([0x1])
+        self._wait_for_message("OK")
 
-        print ("Waiting for ACK...")
+    def _wait_for_message(self, message):
+        self.printer.printmsg("Waiting for \"" + message + "\"...")
         while True:
             data = self.serialStream.read_line().strip()
-            print ("Received " + data)
-            if (data == "OK"):
+            self.printer.printmsg("Received \"" + data + "\"")
+            if (data == message):
                 return
-
 
 

@@ -85,6 +85,7 @@ void FastLedDisplay::ExecuteLedCommand(const LedCommand& led_command)
 void FastLedDisplay::Tick(int delta)
 {
     tick_ += delta;
+    //logger_.Log(TEST, "Serial: %d available bytes, top byte: %d", Serial.available(), Serial.peek());
     if (Serial.peek() == 0x1)
     {
         Serial.read();
