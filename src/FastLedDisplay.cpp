@@ -13,7 +13,6 @@ FastLedDisplay::FastLedDisplay(
         , logger_{logger}
         , serial_{serial}
         , tick_{0}
-        , waiting_to_show_{false}
 {
     leds_ = new CRGB[num_leds];
 }
@@ -59,9 +58,7 @@ bool FastLedDisplay::Initialize()
 
 void FastLedDisplay::ExecuteLedCommand(const LedCommand& led_command)
 {
-    auto index1 = (led_command.index - 30) * 2;
-    auto index2 = index1 + 1;
-    if (index1 < 0 || index2 >= num_leds_ - 1)
+    if (led_command.index < 0 || led_command.index >= num_leds_ - 1)
     {
         return;
     }
@@ -69,9 +66,8 @@ void FastLedDisplay::ExecuteLedCommand(const LedCommand& led_command)
     auto color = CRGB{ led_command.red, led_command.green, led_command.blue };
     if (IsLedCommandOn(led_command))
     {
-        logger_.Log(DEBUG, "Setting LEDs %u and %u to color (%u, %u, %u, %u)."
-            , index1
-            , index2
+        logger_.Log(DEBUG, "Setting LEDs %u to color (%u, %u, %u, %u)."
+            , led_command.index
             , led_command.red
             , led_command.green
             , led_command.blue
@@ -79,45 +75,25 @@ void FastLedDisplay::ExecuteLedCommand(const LedCommand& led_command)
     }
     else
     {
-        logger_.Log(DEBUG, "Turning off LED %u and %u."
-            , index1
-            , index2);
+        logger_.Log(DEBUG, "Turning off LED %u."
+            , led_command.index);
     }
 
-    leds_[index1] = color;
-    leds_[index2] = color;
+    leds_[led_command.index] = color;
 }
 
 void FastLedDisplay::Tick(int delta)
 {
     tick_ += delta;
-    if (tick_ % 50 == 0 && waiting_to_show_)
+    if (Serial.peek() == 0x1)
     {
-        while (serial_.Available() && serial_.Available() % 4 != 0)
-        {
-            auto extra_byte = serial_.ReadByte();
-            logger_.Log(WARNING, "Cleared out extra byte %d", extra_byte);
-        }
-    }
+        Serial.read();
 
-    if (tick_ % 100 == 0 || waiting_to_show_)
-    {
-        serial_.PrintLine("STOP");
-        waiting_to_show_ = true;
-        logger_.Log(DEBUG, "Waiting to call FastLED.Show(). %d bytes remaining in buffer.", serial_.Available());
-        tick_ = 0;
-    }
-
-    // If we've told the PC to stop & we've read all the data then we
-    // can show :-)
-    if (waiting_to_show_ && serial_.Available() == 0)
-    {
-        logger_.Log(DEBUG, "Calling FastLED.show()!");
+        logger_.Log(TEST, "Calling FastLED.show()!");
         FastLED.show();
-        waiting_to_show_ = false;
 
         // TODO(@jez): move
-        serial_.PrintLine("START");
+        serial_.PrintLine("OK");
     }
 }
 

@@ -3,7 +3,7 @@ from mido import MidiFile
 import time, sys
 from datetime import datetime 
 
-file_name = "mgs-jez.mid"
+file_name = "beethoven_ode_to_joy_tracks.mid"
 ready = 0
 send = 0
 time_scale = 1
