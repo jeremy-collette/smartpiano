@@ -46,12 +46,12 @@ class LedBarPiano:
             if (duration < 0.1):
                 to_delay = duration
 
-            time.sleep(duration / self.time_scale)            
+            time.sleep(to_delay / self.time_scale)            
             updated = self._update_if_needed()
             duration -= to_delay
 
     def _update_if_needed(self):
-        if (time.time() - self.last_update_time > 0.2):
+        if (time.time() - self.last_update_time > 0.1):
             self.last_update_time = time.time()
             self.ledBar.update()
             return True

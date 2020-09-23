@@ -1,14 +1,16 @@
 import time
 
 class LedBar:  
-    def __init__(self, serialStream, printer):
+    def __init__(self, serialStream, printer, num_leds):
         self.serialStream = serialStream
         self.send = 0
         self.printer = printer
+        self.num_leds = num_leds
 
     def init(self):
         #self._wait_for_message("Ready!")
-        time.sleep(1)
+        self.clear()
+        time.sleep(5)
 
     def set_led(self, index, color):
         data = [0x32, index]
@@ -31,4 +33,10 @@ class LedBar:
             if (data == message):
                 return
 
+    def clear(self):
+        for i in range(0, self.num_leds):
+            self.set_led(i, (0, 0, 0, 0))
+            if (i % 10 == 0): 
+                self.update()
+        self.update()
 
