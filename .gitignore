@@ -35,7 +35,8 @@
 **.mid
 
 # Platform IO
-.pio/build/*
+.pio/build/
+.pio/libdeps/
 
 # Python
 **.pyc
