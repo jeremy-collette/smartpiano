@@ -1,6 +1,13 @@
+#!/usr/bin/python
+
+import sys
 from smartpianofactory import SmartPianoFactory
 
 if __name__ == "__main__":
+    if len(sys.argv) == 0:
+        print("python main.py <MidiFileName>")
+        sys.exit(1)
+
     #filename = "../beethoven_ode_to_joy_tracks.mid"
     filename = "../mgs-jez.mid"
     #filename = "../Sweden_Minecraft.mid"

@@ -7,7 +7,7 @@ from printer import Printer
 from autoledbar import AutoLedBar
 
 
-class SmartPianoFactory():
+class SmartPianoFactory:
     def __init__(self, serial_port="/dev/ttyACM0", baud=115200, num_leds=144):
         self.num_leds = num_leds
         self.printer = Printer()
