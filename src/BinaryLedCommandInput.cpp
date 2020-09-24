@@ -64,7 +64,7 @@ bool BinaryLedCommandInput::HandleColorCommand(LedCommand* command_out)
         return false;
     }
 
-    char header_byte = input_stream_.ReadByte();
+    auto header_byte = input_stream_.ReadByte();
     if (header_byte != COLOR_COMMAND_HEADER)
     {
         logger_.Log(SmartPiano::DEBUG, "Expected ColorCommand header byte %d but found: %d", COLOR_COMMAND_HEADER, header_byte);
