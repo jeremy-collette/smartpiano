@@ -6,6 +6,8 @@ namespace SmartPiano
 
 enum LogLevel : unsigned char
 {
+    NONE = 0,
+
     TEST = 1,
 
     ERROR = 2,

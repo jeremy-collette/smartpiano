@@ -17,8 +17,10 @@ class SmartPianoClient:
         delay_start = time.time()
         while not self.midi_file.is_eof():
             msg = self.midi_file.get_next_note()
-            delay = time.time() - delay_start
-            self._delay(msg.time - delay)
+            # Get the amount of time we've already been delayed and
+            # subtract it from the amount we will wait to play note
+            time_delayed = time.time() - delay_start
+            self._delay(msg.time - time_delayed)
             delay_start = time.time()
 
             self._play_midi_note(msg)
@@ -53,6 +55,15 @@ class SmartPianoClient:
             if duration < 0.1:
                 to_delay = duration
 
+            # Even though we only want to delay some small amount (e.g. 0.1),
+            # the call to auto_led_bar.tick() will cause some additional delay
+            # due to serial communications. So let's see how long the delay
+            # really took and subtract it from the total delay time (duration).
+            #
+            # TODO: can we call auto_led_bar.tick() first and then call time.sleep
+            # with the remaining time we want to delay for?
+            delay_start = time.time()
             time.sleep(to_delay / self.time_scale)
             self.auto_led_bar.tick()
-            duration -= to_delay
+            time_delayed = time.time() - delay_start
+            duration -= time_delayed
