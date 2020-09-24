@@ -11,9 +11,9 @@ class Serial : public SerialInterface
  public:
     Serial(unsigned long baud);
 
-    virtual int Available();
+    virtual int AvailableBytes();
     virtual bool Initialize();
-    virtual unsigned int PrintLine(const char* data);
+    virtual unsigned int WriteData(const char* data);
     virtual int ReadByte();
     virtual int PeekByte();
 

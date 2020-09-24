@@ -8,7 +8,7 @@ namespace SmartPiano
 FastLedDisplay::FastLedDisplay(
     unsigned char num_leds,
     LoggerInterface& logger,
-    SerialCommandOutputStream& command_output)
+    OutputStreamInterface& command_output)
         : num_leds_{num_leds}
         , logger_{logger}
         , command_output_{command_output}
@@ -57,30 +57,17 @@ bool FastLedDisplay::Initialize()
     return true;
 }
 
-void FastLedDisplay::ExecuteLedCommand(const LedCommand& led_command)
+void FastLedDisplay::ExecuteLedCommand(const LedCommand& command)
 {
-    if (led_command.index < 0 || led_command.index >= num_leds_ - 1)
+    if (command.update)
     {
-        return;
-    }
-
-    auto color = CRGB{ led_command.red, led_command.green, led_command.blue };
-    if (IsLedCommandOn(led_command))
-    {
-        logger_.Log(DEBUG, "Setting LEDs %u to color (%u, %u, %u, %u)."
-            , led_command.index
-            , led_command.red
-            , led_command.green
-            , led_command.blue
-            , led_command.white);
+        ExecuteUpdateCommand(command);
     }
     else
     {
-        logger_.Log(DEBUG, "Turning off LED %u."
-            , led_command.index);
+        ExecuteColorCommand(command);
     }
 
-    leds_[led_command.index] = color;
 }
 
 void FastLedDisplay::Tick(int delta)
@@ -88,7 +75,12 @@ void FastLedDisplay::Tick(int delta)
     // Do nothing
 }
 
-void FastLedDisplay::ExecuteUpdateCommand(const UpdateCommand& update_command)
+bool FastLedDisplay::IsLedCommandOn(const LedCommand& note) const
+{
+    return note.red | note.green | note.blue | note.white;
+}
+
+void FastLedDisplay::ExecuteUpdateCommand(const LedCommand& command)
 {
     logger_.Log(TEST, "Calling FastLED.show()!");
     FastLED.show();
@@ -97,9 +89,30 @@ void FastLedDisplay::ExecuteUpdateCommand(const UpdateCommand& update_command)
     command_output_.WriteData("OK");
 }
 
-bool FastLedDisplay::IsLedCommandOn(const LedCommand& note) const
+void FastLedDisplay::ExecuteColorCommand(const LedCommand& command)
 {
-    return note.red | note.green | note.blue | note.white;
+    if (command.index < 0 || command.index >= num_leds_ - 1)
+    {
+        return;
+    }
+
+    auto color = CRGB{ command.red, command.green, command.blue };
+    if (IsLedCommandOn(command))
+    {
+        logger_.Log(DEBUG, "Setting LEDs %u to color (%u, %u, %u, %u)."
+            , command.index
+            , command.red
+            , command.green
+            , command.blue
+            , command.white);
+    }
+    else
+    {
+        logger_.Log(DEBUG, "Turning off LED %u."
+            , command.index);
+    }
+
+    leds_[command.index] = color;
 }
 
 }

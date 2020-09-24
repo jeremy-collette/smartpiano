@@ -7,7 +7,6 @@
 #include "LoggerInterface.h"
 #include "LedCommandInputInterface.h"
 #include "LedDisplayInterface.h"
-#include "UpdateCommandInputInterface.h"
 
 namespace SmartPiano
 {
@@ -19,8 +18,7 @@ class SmartPiano : public SmartPianoInterface
         LedCommandInputInterface& led_command_input
         , LedDisplayInterface& note_display
         , DelayerInterface& delayer
-        , LoggerInterface& logger
-        , UpdateCommandInputInterface& update_command_input);
+        , LoggerInterface& logger);
 
     virtual void Run();
 
@@ -29,7 +27,6 @@ class SmartPiano : public SmartPianoInterface
     LedDisplayInterface& led_display_;
     DelayerInterface& delayer_;
     LoggerInterface& logger_;
-    UpdateCommandInputInterface& update_command_input_;
 };
 
 }

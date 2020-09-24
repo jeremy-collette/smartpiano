@@ -18,13 +18,20 @@ class BinaryLedCommandInput : public LedCommandInputInterface
 
    virtual bool Initialize();
 
-   virtual bool TryGetNextCommand(LedCommand* note_out);
+   virtual bool TryGetNextCommand(LedCommand* command_out);
    virtual void Tick(int delta);
    virtual bool IsEof();
 
  private:
-   InputStreamInterface& input_stream_;
-   LoggerInterface& logger_;
+  static const char COLOR_COMMAND_HEADER = 0x32;
+  static const char UPDATE_COMMAND_HEADER = 0x93;
+
+  InputStreamInterface& input_stream_;
+  LoggerInterface& logger_;
+
+  bool HandleColorCommand(LedCommand* command_out);
+  bool HandleUpdateCommand(LedCommand* command_out);
+  bool IsValidHeaderByte(int byte);
 };
 
 }

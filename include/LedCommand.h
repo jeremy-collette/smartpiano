@@ -8,6 +8,7 @@ namespace SmartPiano
 
 struct LedCommand
 {
+    bool update;
     uint8_t index;
     uint8_t red;
     uint8_t green;

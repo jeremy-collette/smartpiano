@@ -10,7 +10,7 @@ Serial::Serial(unsigned long baud)
 {
 }
 
-int Serial::Available()
+int Serial::AvailableBytes()
 {
     return ::Serial.available();
 }
@@ -22,7 +22,7 @@ bool Serial::Initialize()
     return true;
 }
 
-unsigned int Serial::PrintLine(const char* data)
+unsigned int Serial::WriteData(const char* data)
 {
     return ::Serial.println(data);
 }
