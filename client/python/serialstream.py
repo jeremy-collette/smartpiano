@@ -1,5 +1,4 @@
 
-
 class SerialStream:
     def __init__(self, serial, printer):
         self.serial = serial

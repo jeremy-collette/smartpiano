@@ -1,6 +1,6 @@
 from ledbarfactory import LedBarFactory
 
-if (__name__ == "__main__"):
+if __name__ == "__main__":
     #filename = "../beethoven_ode_to_joy_tracks.mid"
     filename = "../mgs-jez.mid"
     #filename = "../Sweden_Minecraft.mid"

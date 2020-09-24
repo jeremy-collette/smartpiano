@@ -1,5 +1,6 @@
 import time
 
+
 class AutoLedBar:
     def __init__(self, led_bar, auto_update_span, printer):
         self.led_bar = led_bar
@@ -8,7 +9,7 @@ class AutoLedBar:
         self.last_update_time = 0
 
     def tick(self):
-        if (time.time() - self.last_update_time > self.auto_update_span):
+        if time.time() - self.last_update_time > self.auto_update_span:
             self.printer.printmsg("AutoLedBar update!")
             self.last_update_time = time.time()
             self.led_bar.update()

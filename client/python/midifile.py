@@ -1,23 +1,24 @@
 import mido
 
+
 class MidiFile:
     def __init__(self, filename):
-        self.message_index = 0      
+        self.message_index = 0
         midi_file = mido.MidiFile(filename)
 
         # Pre-process message tracks
         msg_tracks = []
-        for i,track in enumerate(midi_file.tracks):
+        for i, track in enumerate(midi_file.tracks):
             total_time = 0
             for msg in track:
                 total_time += msg.time
-                if (msg.type != "note_on" and msg.type != "note_off"):
+                if msg.type != "note_on" and msg.type != "note_off":
                     continue
                 msg_tracks.append((total_time, i))
         msg_tracks = sorted(msg_tracks, key=lambda x: x[0])
 
         # Pre-process messages with track
-        messages = [] 
+        messages = []
         i = 0
         for msg in midi_file:
             if msg.type != "note_on" and msg.type != "note_off":
@@ -38,6 +39,7 @@ class MidiFile:
 
     def is_eof(self):
         return self.message_index >= len(self.messages)
+
 
 class MidiNote:
     def __init__(self, time, note, on, track):

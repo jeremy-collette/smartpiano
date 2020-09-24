@@ -1,6 +1,7 @@
 import time
 
-class LedBar:  
+
+class LedBar:
     def __init__(self, serial_stream, printer, num_leds):
         self.serial_stream = serial_stream
         self.send = 0
@@ -28,14 +29,13 @@ class LedBar:
         while True:
             data = self.serial_stream.read_line().strip()
             self.printer.printmsg("Received \"" + data + "\"")
-            if (data == message):
+            if data == message:
                 print("Got message!")
                 return
 
     def clear(self):
         for i in range(0, self.num_leds):
             self.set_led(i, 0, 0, 0, 0)
-            if (i % 10 == 0): 
+            if i % 10 == 0:
                 self.update()
         self.update()
-
