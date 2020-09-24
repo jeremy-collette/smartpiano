@@ -20,6 +20,7 @@ class LedBarPiano:
             self._play_midi_note(msg)
             self._update_if_needed()
 
+        self.ledBar.update()
         print("Done!")
 
     def _play_midi_note(self, msg):

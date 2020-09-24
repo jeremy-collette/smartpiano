@@ -7,8 +7,10 @@ from printer import Printer
 
 if (__name__ == "__main__"):
     #filename = "../beethoven_ode_to_joy_tracks.mid"
-    filename = "../mgs-jez.mid"
-    time_scale = 1
+    #filename = "../mgs-jez.mid"
+    #filename = "../Sweden_Minecraft.mid"
+    filename = "../happy_birthday_tracks.mid"
+    time_scale = 0.25
     num_leds = 144
 
     with serial.Serial("/dev/ttyACM0", 115200) as ser:
