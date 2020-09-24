@@ -6,7 +6,8 @@ from ledbarpiano import LedBarPiano
 from printer import Printer
 
 if (__name__ == "__main__"):
-    filename = "../beethoven_ode_to_joy_tracks.mid"
+    #filename = "../beethoven_ode_to_joy_tracks.mid"
+    filename = "../mgs-jez.mid"
     time_scale = 1
     num_leds = 144
 

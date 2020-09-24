@@ -7,6 +7,7 @@
 #include "Logger.h"
 #include "Serial.h"
 #include "SerialCommandInputStream.h"
+#include "SerialCommandOutputStream.h"
 #include "SerialLogOutputStream.h"
 #include "SmartPiano.h"
 
@@ -25,8 +26,10 @@ SmartPiano::BinaryLedCommandInput led_command_input { command_input_stream, logg
 
 SmartPiano::BinaryUpdateCommandInput update_command_input { command_input_stream, logger };
 
+SmartPiano::SerialCommandOutputStream command_output_stream { serial };
+
 unsigned char num_leds = 144U;
-SmartPiano::FastLedDisplay led_display { num_leds, logger, serial };
+SmartPiano::FastLedDisplay led_display { num_leds, logger, command_output_stream };
 
 SmartPiano::Delayer delayer;
 
@@ -37,7 +40,6 @@ void setup()
   serial.Initialize();
   logger.Initialize();
   led_display.Initialize();
-  serial.PrintLine("Ready!");
 }
 
 void loop()

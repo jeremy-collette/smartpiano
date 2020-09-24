@@ -1,20 +1,20 @@
-#include "SerialLogOutputStream.h"
+#include "SerialCommandOutputStream.h"
 
 namespace SmartPiano
 {
 
-SerialLogOutputStream::SerialLogOutputStream(
+SerialCommandOutputStream::SerialCommandOutputStream(
     SerialInterface& serial)
         : serial_{serial}
 {
 }
 
-unsigned int SerialLogOutputStream::WriteData(
+unsigned int SerialCommandOutputStream::WriteData(
     const char* data)
 {
     return serial_.PrintLine(data);
 
-    //serial_.PrintLine("\x2");
+    //serial_.PrintLine("\x1");
     //return serial_.PrintLine(data) + 1;
 }
 

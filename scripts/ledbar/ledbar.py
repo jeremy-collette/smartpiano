@@ -8,7 +8,7 @@ class LedBar:
         self.num_leds = num_leds
 
     def init(self):
-        self._wait_for_message("Ready!")
+        #self._wait_for_message("READY")
         self.clear()
         time.sleep(5)
 

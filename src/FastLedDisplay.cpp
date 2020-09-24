@@ -8,10 +8,10 @@ namespace SmartPiano
 FastLedDisplay::FastLedDisplay(
     unsigned char num_leds,
     LoggerInterface& logger,
-    SerialInterface& serial)
+    SerialCommandOutputStream& command_output)
         : num_leds_{num_leds}
         , logger_{logger}
-        , serial_{serial}
+        , command_output_{command_output}
         , tick_{0}
 {
     leds_ = new CRGB[num_leds];
@@ -52,7 +52,8 @@ bool FastLedDisplay::Initialize()
     FastLED.show();
     FastLED.delay(50);
 
-    serial_.PrintLine("START");
+    // TODO(jeremy): higher level class
+    command_output_.WriteData("READY");
     return true;
 }
 
@@ -91,8 +92,9 @@ void FastLedDisplay::ExecuteUpdateCommand(const UpdateCommand& update_command)
 {
     logger_.Log(TEST, "Calling FastLED.show()!");
     FastLED.show();
-    // TODO(@jeremy): inject command output stream
-    serial_.PrintLine("OK");
+
+    // TODO(jeremy): higher level class
+    command_output_.WriteData("OK");
 }
 
 bool FastLedDisplay::IsLedCommandOn(const LedCommand& note) const

@@ -6,7 +6,7 @@
 #include <FastLED.h>
 
 #include "LoggerInterface.h"
-#include "SerialInterface.h"
+#include "SerialCommandOutputStream.h"
 
 namespace SmartPiano
 {
@@ -19,7 +19,7 @@ class FastLedDisplay : public LedDisplayInterface
     FastLedDisplay(
         unsigned char num_leds
         , LoggerInterface& logger
-        , SerialInterface& serial);
+        , SerialCommandOutputStream& command_output);
     virtual ~FastLedDisplay();
 
     virtual bool Initialize();
@@ -32,7 +32,7 @@ class FastLedDisplay : public LedDisplayInterface
     unsigned char num_leds_;
     unsigned char data_pin_;
     LoggerInterface& logger_;
-    SerialInterface& serial_;
+    SerialCommandOutputStream& command_output_;
     // TODO: change data type
     int tick_;
 
