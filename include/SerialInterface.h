@@ -12,7 +12,8 @@ class SerialInterface : public InputStreamInterface, public OutputStreamInterfac
  public:
     virtual int AvailableBytes() = 0;
     virtual bool Initialize() = 0;
-    virtual unsigned int WriteData(const char* data) = 0;
+    virtual int WriteData(const char* data) = 0;
+    virtual int WriteByte(char byte) = 0;
     virtual int ReadByte() = 0;
     virtual int PeekByte() = 0;
 };

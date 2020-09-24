@@ -9,7 +9,7 @@ auto baud = 115200U;
 SmartPiano::Serial serial { baud };
 
 auto buffer_size = 256U;
-auto highest_level = SmartPiano::TEST;
+auto highest_level = SmartPiano::INFO;
 SmartPiano::Logger logger { serial, buffer_size, highest_level };
 
 SmartPiano::BinaryLedCommandInput led_command_input { serial, logger };

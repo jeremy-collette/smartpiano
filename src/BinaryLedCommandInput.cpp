@@ -54,7 +54,6 @@ bool BinaryLedCommandInput::IsEof()
     return false;
 }
 
-
 bool BinaryLedCommandInput::HandleColorCommand(LedCommand* command_out)
 {
     auto available_bytes = input_stream_.AvailableBytes();

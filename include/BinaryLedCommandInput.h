@@ -23,8 +23,8 @@ class BinaryLedCommandInput : public LedCommandInputInterface
    virtual bool IsEof();
 
  private:
-  static const char COLOR_COMMAND_HEADER = 0x32;
-  static const char UPDATE_COMMAND_HEADER = 0x93;
+  static const int COLOR_COMMAND_HEADER = 0x32;
+  static const int UPDATE_COMMAND_HEADER = 0x93;
 
   InputStreamInterface& input_stream_;
   LoggerInterface& logger_;

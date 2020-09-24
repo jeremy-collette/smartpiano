@@ -27,6 +27,9 @@ class FastLedDisplay : public LedDisplayInterface
     virtual void Tick(int delta);
 
  private:
+    const static char READY_MESSAGE = 0x42;
+    const static char UPDATE_COMPLETE_MESSAGE = 0x64;
+
     CRGB* leds_;
     unsigned char num_leds_;
     unsigned char data_pin_;

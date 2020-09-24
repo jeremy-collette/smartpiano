@@ -8,7 +8,7 @@ class LedBar:
         self.num_leds = num_leds
 
     def init(self):
-        self._wait_for_message("READY")
+        self._wait_for_message("\x42")  # 0x42 is sent when device is ready
         self.clear()
         time.sleep(5)
 
@@ -21,7 +21,7 @@ class LedBar:
     def update(self):
         self.printer.printmsg("Sending update request...")
         self.serial_stream.send_packet([0x93])
-        self._wait_for_message("OK")
+        self._wait_for_message("\x64")  # 0x64 is sent back after update is complete
 
     def _wait_for_message(self, message):
         self.printer.printmsg("Waiting for \"" + message + "\"...")
@@ -29,6 +29,7 @@ class LedBar:
             data = self.serial_stream.read_line().strip()
             self.printer.printmsg("Received \"" + data + "\"")
             if (data == message):
+                print("Got message!")
                 return
 
     def clear(self):

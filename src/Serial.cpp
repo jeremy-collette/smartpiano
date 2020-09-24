@@ -22,8 +22,14 @@ bool Serial::Initialize()
     return true;
 }
 
-unsigned int Serial::WriteData(const char* data)
+int Serial::WriteData(const char* data)
 {
+    return ::Serial.println(data);
+}
+
+int Serial::WriteByte(char data)
+{
+    // TODO(@jeremy): consider just using write here
     return ::Serial.println(data);
 }
 

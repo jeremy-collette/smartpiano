@@ -7,7 +7,8 @@ namespace SmartPiano
 class OutputStreamInterface
 {
  public:
-    virtual unsigned int WriteData(const char* data) = 0;
+    virtual int WriteData(const char* data) = 0;
+    virtual int WriteByte(char byte) = 0;
 };
 
 }

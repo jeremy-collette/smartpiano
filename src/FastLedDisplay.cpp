@@ -52,8 +52,8 @@ bool FastLedDisplay::Initialize()
     FastLED.show();
     FastLED.delay(50);
 
-    // TODO(jeremy): higher level class
-    command_output_.WriteData("READY");
+    // TODO(@jeremy): consider moving
+    command_output_.WriteByte(READY_MESSAGE);
     return true;
 }
 
@@ -85,8 +85,7 @@ void FastLedDisplay::ExecuteUpdateCommand(const LedCommand& command)
     logger_.Log(TEST, "Calling FastLED.show()!");
     FastLED.show();
 
-    // TODO(jeremy): higher level class
-    command_output_.WriteData("OK");
+    command_output_.WriteByte(UPDATE_COMPLETE_MESSAGE);
 }
 
 void FastLedDisplay::ExecuteColorCommand(const LedCommand& command)
