@@ -31,7 +31,12 @@
 *.out
 *.app
 
-# Project specific
+# Project assets
 **.mid
+
+# Platform IO
 .pio/build/*
+
+# Python
 **.pyc
+**venv/
