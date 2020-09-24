@@ -6,25 +6,25 @@
 #include <Arduino.h>
 #include <stdarg.h>
 
-#include "SerialInterface.h"
+#include "OutputStreamInterface.h"
 
 namespace SmartPiano
 {
 
-class SerialLogger : public LoggerInterface
+class Logger : public LoggerInterface
 {
  public:
-    SerialLogger(
-        SerialInterface& serial
+    Logger(
+        OutputStreamInterface& output_stream
         , size_t buffer_size
         , LogLevel highest_level);
-    ~SerialLogger();
+    ~Logger();
 
     virtual void Initialize();
     virtual void Log(LogLevel level, const char* format, ...);
 
  private:
-    SerialInterface& serial_;
+    OutputStreamInterface& output_stream_;
     size_t buffer_size_;
     char* buffer_;
     LogLevel highest_level_;

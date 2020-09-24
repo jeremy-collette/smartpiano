@@ -1,4 +1,4 @@
-#include "SerialLogger.h"
+#include "Logger.h"
 
 #include <Arduino.h>
 #include <stdarg.h>
@@ -6,28 +6,28 @@
 namespace SmartPiano
 {
 
-SerialLogger::SerialLogger(
-    SerialInterface& serial
+Logger::Logger(
+    OutputStreamInterface& output_stream
     , size_t buffer_size
     , LogLevel highest_level)
-        : serial_{serial}
+        : output_stream_{output_stream}
         , buffer_size_{buffer_size}
         , highest_level_{highest_level}
 {
     buffer_ = new char[buffer_size_];
 }
 
-SerialLogger::~SerialLogger()
+Logger::~Logger()
 {
     delete[] buffer_;
 }
 
-void SerialLogger::Initialize()
+void Logger::Initialize()
 {
     Log(LogLevel::INFO, "Logger initialized!");
 }
 
-void SerialLogger::Log(LogLevel level, const char* format, ...)
+void Logger::Log(LogLevel level, const char* format, ...)
 {
     va_list arglist;
     va_start (arglist, format);
@@ -35,7 +35,7 @@ void SerialLogger::Log(LogLevel level, const char* format, ...)
     va_end (arglist);
 }
 
-void SerialLogger::Log(LogLevel level, const char* format, va_list arglist)
+void Logger::Log(LogLevel level, const char* format, va_list arglist)
 {
     if (level <= highest_level_)
     {
@@ -44,7 +44,7 @@ void SerialLogger::Log(LogLevel level, const char* format, va_list arglist)
 
         // Add text after LogLevel
         vsnprintf(buffer_ + written, buffer_size_ - written, format, arglist);
-        serial_.PrintLine(buffer_);
+        output_stream_.WriteData(buffer_);
     }
 }
 

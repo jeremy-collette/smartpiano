@@ -9,7 +9,7 @@ class SerialInterface
  public:
     virtual int Available() = 0;
     virtual bool Initialize() = 0;
-    virtual void PrintLine(const char* data) = 0;
+    virtual unsigned int PrintLine(const char* data) = 0;
     virtual int ReadByte() = 0;
     virtual int PeekByte() = 0;
 };

@@ -84,18 +84,15 @@ void FastLedDisplay::ExecuteLedCommand(const LedCommand& led_command)
 
 void FastLedDisplay::Tick(int delta)
 {
-    tick_ += delta;
-    //logger_.Log(TEST, "Serial: %d available bytes, top byte: %d", Serial.available(), Serial.peek());
-    if (Serial.peek() == 0x1)
-    {
-        Serial.read();
+    // Do nothing
+}
 
-        logger_.Log(TEST, "Calling FastLED.show()!");
-        FastLED.show();
-
-        // TODO(@jez): move
-        serial_.PrintLine("OK");
-    }
+void FastLedDisplay::ExecuteUpdateCommand(const UpdateCommand& update_command)
+{
+    logger_.Log(TEST, "Calling FastLED.show()!");
+    FastLED.show();
+    // TODO(@jeremy): inject command output stream
+    serial_.PrintLine("OK");
 }
 
 bool FastLedDisplay::IsLedCommandOn(const LedCommand& note) const

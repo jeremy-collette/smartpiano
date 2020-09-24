@@ -22,9 +22,9 @@ bool Serial::Initialize()
     return true;
 }
 
-void Serial::PrintLine(const char* data)
+unsigned int Serial::PrintLine(const char* data)
 {
-    ::Serial.println(data);
+    return ::Serial.println(data);
 }
 
 int Serial::ReadByte()

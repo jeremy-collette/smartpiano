@@ -13,7 +13,7 @@ class Serial : public SerialInterface
 
     virtual int Available();
     virtual bool Initialize();
-    virtual void PrintLine(const char* data);
+    virtual unsigned int PrintLine(const char* data);
     virtual int ReadByte();
     virtual int PeekByte();
 

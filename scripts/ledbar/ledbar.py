@@ -8,7 +8,7 @@ class LedBar:
         self.num_leds = num_leds
 
     def init(self):
-        #self._wait_for_message("Ready!")
+        self._wait_for_message("Ready!")
         self.clear()
         time.sleep(5)
 
@@ -22,7 +22,7 @@ class LedBar:
 
     def update(self):
         self.printer.printmsg("Sending update request...")
-        self.serialStream.send_packet([0x1])
+        self.serialStream.send_packet([0x93])
         self._wait_for_message("OK")
 
     def _wait_for_message(self, message):

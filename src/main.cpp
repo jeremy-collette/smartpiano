@@ -1,27 +1,36 @@
 #include <Arduino.h>
 
+#include "BinaryLedCommandInput.h"
+#include "BinaryUpdateCommandInput.h"
 #include "Delayer.h"
 #include "FastLedDisplay.h"
+#include "Logger.h"
 #include "Serial.h"
-#include "SerialBinaryLedCommandInput.h"
-#include "SerialLogger.h"
+#include "SerialCommandInputStream.h"
+#include "SerialLogOutputStream.h"
 #include "SmartPiano.h"
+
 
 auto baud = 115200U;
 SmartPiano::Serial serial { baud };
 
 auto buffer_size = 256U;
 auto highest_level = SmartPiano::TEST;
-SmartPiano::SerialLogger logger { serial, buffer_size, highest_level };
+auto logger_output_stream = SmartPiano::SerialLogOutputStream { serial };
+SmartPiano::Logger logger { logger_output_stream, buffer_size, highest_level };
 
-SmartPiano::SerialBinaryLedCommandInput led_command_input { serial, logger };
+SmartPiano::SerialCommandInputStream command_input_stream { serial };
+
+SmartPiano::BinaryLedCommandInput led_command_input { command_input_stream, logger };
+
+SmartPiano::BinaryUpdateCommandInput update_command_input { command_input_stream, logger };
 
 unsigned char num_leds = 144U;
 SmartPiano::FastLedDisplay led_display { num_leds, logger, serial };
 
 SmartPiano::Delayer delayer;
 
-SmartPiano::SmartPiano smart_piano { led_command_input, led_display, delayer, logger };
+SmartPiano::SmartPiano smart_piano { led_command_input, led_display, delayer, logger, update_command_input };
 
 void setup()
 {
