@@ -34,3 +34,4 @@
 # Project specific
 **.mid
 .pio/build/*
+**.pyc
