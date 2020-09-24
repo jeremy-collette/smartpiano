@@ -19,6 +19,7 @@ class AutoLedBar:
 
     def set_led(self, index, r, g, b, w):
         self.led_bar.set_led(index, r, g, b, w)
+        self.tick()
 
     def update(self):
         self.led_bar.update()

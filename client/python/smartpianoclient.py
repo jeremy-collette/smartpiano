@@ -1,7 +1,7 @@
 import time
 
 
-class LedBarPiano:
+class SmartPianoClient:
     def __init__(self, midi_file, auto_led_bar, time_scale, printer, left_hand_color, right_hand_color):
         self.last_update_time = 0
         self.midi_file = midi_file
@@ -11,7 +11,7 @@ class LedBarPiano:
         self.left_hand_color = left_hand_color
         self.right_hand_color = right_hand_color
 
-    def play(self):
+    def play_song(self):
         self.printer.printmsg("Beginning song...")
 
         delay_start = time.time()
