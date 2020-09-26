@@ -1,6 +1,6 @@
 # smartpiano
 
-smartpiano is a free & open-source project that lights up keys on a piano or digital keyboard to play a selected MIDI song. This is achieved using a PC running the smartpiano client, an Arduino running the smartpiano server, and a strip of LEDs which are placed on the instrument. This repository contains all the instructions for assembling the project and the required source code to run on both the PC and Arduino.
+smartpiano is a free & open-source project that lights up keys on a piano or digital keyboard to play a selected MIDI song. This is achieved using a PC running a smartpiano client, an Arduino running the smartpiano server, and a strip of LEDs which are placed on the instrument. This repository contains all the instructions for assembling the project and the required source code to run the smartpiano server on the Arduino.
 
 **NOTE: Please note this project is still in alpha phase. Some features may be incomplete and/or may not meet quality standards. Show your support by reporting and/or fixing bugs.**
 
@@ -38,7 +38,6 @@ To assemble the Arduino components, follow the following steps:
   7. Put the 220 ohm resistor on the breadboard so it is connected to the wire coming from digital pin 8
   8. Connect a wire from the other end of the resistor to the connector that is marked DATA on the WS2812B LED strip
 
-
 ## Uploading code to the Arduino
   1. Open the "smartpiano" folder in Visual Studio Code
   2. Open the PlatformIO context menu, and click "Build"
@@ -48,23 +47,8 @@ To assemble the Arduino components, follow the following steps:
 
 **NOTE: If you use the monitor, make sure you close it before you try to run the smartpiano client. Otherwise the client will not be able to connect to the Arduino using the serial port.**
 
-## Running the client
-Now that you have an Arduino running the smartpiano server code, you can connect to it using the client to play a song:
-1. Navigate to the "client" folder in your favorite terminal.
-2. Navigate to the "smartpianoclient" folder.
-3. Install the required dependencies:
-```sh
-pip3 install serial==0.0.97
-pip3 install mido==1.2.9
-```
-4. Run the client with no arguments to see available options:
-```sh
-python3 main.py
-```
-5. Run the client with a specified MIDI file:
-```sh
-python3 main.py "~/Desktop/some_midi_file.mid"
-```
+## Connecting to smartpiano
+Now that you have an Arduino running the smartpiano server code, you can connect to it using a client. Currently, the smartpiano team provides a Python client which can be found in the [smartpianoclient-python](https://github.com/jeremy-collette/smartpianoclient-python) repository.
 
 ## Play at Carnegie Hall
 Now that you're all setup and playing piano. It's time to practice, practice, practice!
