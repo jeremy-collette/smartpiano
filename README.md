@@ -44,8 +44,6 @@ To assemble the Arduino components, follow the following steps:
   4. If you want to check that the code is running, click "Monitor"
   5. You should see the LED strip on the Arduino light up as the code is initialized
 
-**NOTE: If you use the monitor, make sure you close it before you try to run the smartpiano client. Otherwise the client will not be able to connect to the Arduino using the serial port.**
-
 ## Connecting to smartpiano
 Now that you have an Arduino running the smartpiano server code, you can connect to it using a client. Currently, the smartpiano team provides a Python client which can be found in the [smartpianoclient-python](https://github.com/jeremy-collette/smartpianoclient-python) repository.
 
