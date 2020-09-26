@@ -24,7 +24,7 @@ As mentioned above, smartpiano requires certain hardware to run. This list inclu
   * Piano or digital keyboard
 
 ### Software
-  * Visual Studio Code with the PlatformIO plugin installed to build & upload the smartpiano server code to the Arduino
+  * Visual Studio Code (with the PlatformIO plugin installed) to build & upload the smartpiano server code to the Arduino
 
 ## Assembling the Arduino
 To assemble the Arduino components, follow the following steps:
