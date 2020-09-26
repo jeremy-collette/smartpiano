@@ -25,9 +25,6 @@ As mentioned above, smartpiano requires certain hardware to run. This list inclu
 
 ### Software
   * Visual Studio Code with the PlatformIO plugin installed to build & upload the smartpiano server code to the Arduino
-  * Python3 (with pip installed) to run the smartpiano client code
-    - PyCharm is recommended for editing the smartpiano client code
-  * A MIDI file to play
 
 ## Assembling the Arduino
 To assemble the Arduino components, follow the following steps:
