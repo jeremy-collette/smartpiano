@@ -38,6 +38,5 @@
 .pio/build/
 .pio/libdeps/
 
-# Python
-**.pyc
-**venv/
+# VS Code
+.vscode
