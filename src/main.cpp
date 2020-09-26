@@ -44,7 +44,7 @@ void setup()
 {
   serial.Initialize();
   logger.Initialize();
-  logger.Log(SmartPiano::INFO, "SmartPiano Arduino server %s", SMARTPIANO_VERSION_STRING);
+  logger.Log(SmartPiano::INFO, "smartpiano Arduino Server %s", SMARTPIANO_VERSION_STRING);
   led_display.Initialize();
 }
 
