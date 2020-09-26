@@ -30,3 +30,13 @@
 *.exe
 *.out
 *.app
+
+# Project assets
+**.mid
+
+# Platform IO
+.pio/build/
+.pio/libdeps/
+
+# VS Code
+.vscode
