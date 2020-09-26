@@ -1,8 +1,10 @@
 # smartpiano
 
-smartpiano is a free & open-source project that lights up keys on a piano or digital keyboard to play a selected MIDI song. This is achieved using a PC running a smartpiano client, an Arduino running the smartpiano server, and a strip of LEDs which are placed on the instrument. This repository contains all the instructions for assembling the project and the required source code to run the smartpiano server on the Arduino.
-
 **NOTE: Please note this project is still in alpha phase. Some features may be incomplete and/or may not meet quality standards. Show your support by reporting and/or fixing bugs.**
+
+**NOTE: This repository contains the smartpiano Arduino _server_ codebase. If you're looking for a client to connect to an existing smartpiano server, please see ["Connecting to smartpiano"](#connecting-to-smartpiano) below.**
+
+smartpiano is a free & open-source project that lights up keys on a piano or digital keyboard to play a selected MIDI song. This is achieved using a PC running a smartpiano client, an Arduino running the smartpiano server, and a strip of LEDs which are placed on the instrument. This repository contains all the instructions for assembling and hosting an Arduino smartpiano server.
 
 ## License
 smartpiano is released as free software under the GPLv3 license. Please note that there may be some conditions that apply to the free use and distribution of this software. Please see the LICENSE file for more information.
