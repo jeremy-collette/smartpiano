@@ -1,5 +1,5 @@
 /*
- * smartpiano
+ * smartpiano Arduino Server
  * Copyright (C) 2020 Jeremy Collette.
  *
  * This program is free software: you can redistribute it and/or modify it
