@@ -4,6 +4,7 @@
 #include "Logger.h"
 #include "Serial.h"
 #include "SmartPiano.h"
+#include "Version.h"
 
 auto baud = 115200U;
 SmartPiano::Serial serial { baud };
@@ -25,6 +26,7 @@ void setup()
 {
   serial.Initialize();
   logger.Initialize();
+  logger.Log(SmartPiano::INFO, "SmartPiano Arduino server %s", SMARTPIANO_VERSION_STRING);
   led_display.Initialize();
 }
 
